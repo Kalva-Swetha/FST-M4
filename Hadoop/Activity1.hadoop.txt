@@ -1,0 +1,10 @@
+root@4ce75601994e:/# vim txtFile.txt
+root@4ce75601994e:/# vim csvFile.csv
+root@4ce75601994e:/# hdfs dfs -mkdir /user/root/textData
+root@4ce75601994e:/# hdfs dfs -put ./csvFile.csv /user/root/textData
+root@4ce75601994e:/# hdfs dfs -put ./txtFile.txt /user/root/textData
+root@4ce75601994e:/# hdfs dfs -stat "type:%F permissions:%a %u:%g size:%b name:%n" /user/root/textData/csvFile.csv
+type:regular file permissions:644 root:supergroup size:527 name:csvFile.csv
+root@4ce75601994e:/# hdfs dfs -stat "type:%F permissions:%a %u:%g size:%b name:%n" /user/root/textData/txtFile.txt
+type:regular file permissions:644 root:supergroup size:157 name:txtFile.txt
+root@4ce75601994e:/#
