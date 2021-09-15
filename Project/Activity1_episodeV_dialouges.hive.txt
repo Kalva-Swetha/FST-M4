@@ -1,0 +1,262 @@
+root@4ce75601994e:/# vim episodeV_dialouges.txt
+root@4ce75601994e:/# hdfs dfs -put ./episodeV_dialouges.txt /user/root/
+root@4ce75601994e:/# hive
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/local/apache-hive-3.1.2-bin/lib/log4j-slf4j-impl-2.10.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/usr/local/hadoop-3.3.1/share/hadoop/common/lib/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Hive Session ID = 02cbabcd-0141-4a4c-a659-dbb25592f8cc
+
+Logging initialized using configuration in jar:file:/usr/local/apache-hive-3.1.2-bin/lib/hive-common-3.1.2.jar!/hive-log4j2.properties Async: true
+Hive Session ID = a6cc973a-543b-4553-a093-0e28243c7c01
+Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+hive> CREATE TABLE episodeV (name STRING, line STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES("skip.header.line.count"="2");
+OK
+Time taken: 1.878 seconds
+hive> LOAD DATA LOCAL INPATH '/episodeV_dialouges.txt' INTO TABLE episodeV;
+Loading data to table default.episodev
+OK
+Time taken: 1.13 seconds
+hive> select name, count(name) as no_of_lines from episodeV group by name order by no_of_lines desc;
+Query ID = root_20210915033134_7a93c4bd-2db9-4ddb-98e6-9ab101899de3
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0007, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0007/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0007
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2021-09-15 03:31:55,000 Stage-1 map = 0%,  reduce = 0%
+2021-09-15 03:32:03,561 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.89 sec
+2021-09-15 03:32:12,104 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 9.74 sec
+MapReduce Total cumulative CPU time: 9 seconds 740 msec
+Ended Job = job_1631675301177_0007
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0008, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0008/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0008
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2021-09-15 03:32:30,128 Stage-2 map = 0%,  reduce = 0%
+2021-09-15 03:32:38,643 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 3.21 sec
+2021-09-15 03:32:47,187 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 7.93 sec
+MapReduce Total cumulative CPU time: 7 seconds 930 msec
+Ended Job = job_1631675301177_0008
+MapReduce Jobs Launched:
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 9.74 sec   HDFS Read: 61985 HDFS Write: 1530 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 7.93 sec   HDFS Read: 9046 HDFS Write: 1333 SUCCESS
+Total MapReduce CPU Time Spent: 17 seconds 670 msec
+OK
+HAN     182
+LUKE    128
+LEIA    114
+THREEPIO        92
+LANDO   61
+VADER   56
+YODA    36
+PIETT   23
+CREATURE        21
+RIEEKAN 13
+BEN     11
+WEDGE   8
+VEERS   7
+DECK OFFICER    7
+ZEV     6
+OZZEL   5
+NEEDA   5
+EMPEROR 5
+BOBA FETT       4
+JANSON  4
+DACK    4
+BEN'S VOICE     4
+ANNOUNCER       3
+CONTROLLER      3
+TRENCH OFFICER  3
+DERLIN  3
+IMPERIAL OFFICER        2
+MEDICAL DROID   2
+LIEUTENANT      2
+SENIOR CONTROLLER       2
+INTERCOM VOICE  2
+TRACKING OFFICER        2
+COMMUNICATIONS OFFICER  2
+HOBBIE  1
+HEAD CONTROLLER 1
+STRANGE VOICE   1
+FIRST CONTROLLER        1
+SECOND OFFICER  1
+MAN'S VOICE     1
+ASSISTANT OFFICER       1
+OFFICER 1
+SECOND CONTROLLER       1
+PILOT   1
+REBEL FIGHTER   1
+CAPTAIN 1
+PILOTS  1
+REBEL CAPTAIN   1
+WOMAN CONTROLLER        1
+IMPERIAL SOLDIER        1
+SECOND THREEPIO 1
+Time taken: 74.831 seconds, Fetched: 50 row(s)
+
+
+hive> INSERT OVERWRITE DIRECTORY '/user/root/output'
+    >     ROW format delimited fields terminated by '\n'
+    > select name, count(name) as no_of_lines from episodeV group by name order by no_of_lines desc;
+Query ID = root_20210915035701_16dfb4b4-81b4-445e-89f5-bf3b5ad0b020
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0013, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0013/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0013
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2021-09-15 03:57:19,271 Stage-1 map = 0%,  reduce = 0%
+2021-09-15 03:57:26,807 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.85 sec
+2021-09-15 03:57:34,404 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 8.91 sec
+MapReduce Total cumulative CPU time: 8 seconds 910 msec
+Ended Job = job_1631675301177_0013
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0014, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0014/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0014
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2021-09-15 03:57:54,351 Stage-2 map = 0%,  reduce = 0%
+2021-09-15 03:58:01,725 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 3.69 sec
+2021-09-15 03:58:09,151 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 7.36 sec
+MapReduce Total cumulative CPU time: 7 seconds 360 msec
+Ended Job = job_1631675301177_0014
+Moving data to directory /user/root/output
+MapReduce Jobs Launched:
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 8.91 sec   HDFS Read: 61985 HDFS Write: 1530 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 7.36 sec   HDFS Read: 8608 HDFS Write: 646 SUCCESS
+Total MapReduce CPU Time Spent: 16 seconds 270 msec
+OK
+Time taken: 68.351 seconds
+
+hive> dfs -copyToLocal 'hdfs:///user/root/output/000000_0' './episodeV_output.txt';
+
+root@4ce75601994e:/# cat episodeV_output.txt
+HAN
+182
+LUKE
+128
+LEIA
+114
+THREEPIO
+92
+LANDO
+61
+VADER
+56
+YODA
+36
+PIETT
+23
+CREATURE
+21
+RIEEKAN
+13
+BEN
+11
+WEDGE
+8
+VEERS
+7
+DECK OFFICER
+7
+ZEV
+6
+OZZEL
+5
+NEEDA
+5
+EMPEROR
+5
+BOBA FETT
+4
+JANSON
+4
+DACK
+4
+BEN'S VOICE
+4
+ANNOUNCER
+3
+CONTROLLER
+3
+TRENCH OFFICER
+3
+DERLIN
+3
+IMPERIAL OFFICER
+2
+MEDICAL DROID
+2
+LIEUTENANT
+2
+SENIOR CONTROLLER
+2
+INTERCOM VOICE
+2
+TRACKING OFFICER
+2
+COMMUNICATIONS OFFICER
+2
+HOBBIE
+1
+HEAD CONTROLLER
+1
+STRANGE VOICE
+1
+FIRST CONTROLLER
+1
+SECOND OFFICER
+1
+MAN'S VOICE
+1
+ASSISTANT OFFICER
+1
+OFFICER
+1
+SECOND CONTROLLER
+1
+PILOT
+1
+REBEL FIGHTER
+1
+CAPTAIN
+1
+PILOTS
+1
+REBEL CAPTAIN
+1
+WOMAN CONTROLLER
+1
+IMPERIAL SOLDIER
+1
+SECOND THREEPIO
+1
+root@4ce75601994e:/#

@@ -1,0 +1,321 @@
+root@4ce75601994e:/# ls
+bin  boot  derby.log  dev  episodeIV_dialouges.txt  etc  home  lib  lib64  media  metastore_db  mnt  opt  output.txt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@4ce75601994e:/# hive
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/local/apache-hive-3.1.2-bin/lib/log4j-slf4j-impl-2.10.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/usr/local/hadoop-3.3.1/share/hadoop/common/lib/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Hive Session ID = cccc3c3d-bfe2-4166-a124-e0e72f901768
+
+Logging initialized using configuration in jar:file:/usr/local/apache-hive-3.1.2-bin/lib/hive-common-3.1.2.jar!/hive-log4j2.properties Async: true
+Hive Session ID = 43fb0d8a-76af-4a23-a7db-62ab3b7a0539
+Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+hive> select name, count(name) as no_of_lines from episodeIV group by name order by no_of_lines desc;
+Query ID = root_20210915032504_0c889741-5279-4d59-b0d3-73286e8c762f
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0005, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0005/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0005
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2021-09-15 03:25:25,799 Stage-1 map = 0%,  reduce = 0%
+2021-09-15 03:25:34,448 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 5.37 sec
+2021-09-15 03:25:43,049 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 10.06 sec
+MapReduce Total cumulative CPU time: 10 seconds 60 msec
+Ended Job = job_1631675301177_0005
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0006, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0006/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0006
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2021-09-15 03:26:02,938 Stage-2 map = 0%,  reduce = 0%
+2021-09-15 03:26:15,046 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 5.38 sec
+2021-09-15 03:26:22,599 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 9.78 sec
+MapReduce Total cumulative CPU time: 9 seconds 780 msec
+Ended Job = job_1631675301177_0006
+MapReduce Jobs Launched:
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 10.06 sec   HDFS Read: 79777 HDFS Write: 2015 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 9.78 sec   HDFS Read: 9535 HDFS Write: 1753 SUCCESS
+Total MapReduce CPU Time Spent: 19 seconds 840 msec
+OK
+LUKE    253
+HAN     152
+THREEPIO        119
+BEN     76
+LEIA    57
+VADER   41
+RED LEADER      36
+BIGGS   34
+TARKIN  28
+OWEN    25
+TROOPER 19
+GOLD LEADER     14
+WEDGE   14
+OFFICER 11
+RED TEN 7
+GOLD FIVE       7
+DODONNA 6
+DEATH STAR INTERCOM VOICE       6
+INTERCOM VOICE  6
+GREEDO  6
+FIRST TROOPER   6
+AUNT BERU       6
+BEN'S VOICE     6
+JABBA   6
+HUMAN   4
+TAGGE   4
+MOTTI   4
+VOICE   3
+SECOND TROOPER  3
+MASSASSI INTERCOM VOICE 3
+COMMANDER       3
+BARTENDER       3
+CAMIE   2
+CHIEF   2
+WILLARD 2
+FIXER   2
+GANTRY OFFICER  2
+GOLD TWO        2
+IMPERIAL OFFICER        2
+WOMAN   1
+WINGMAN'S VOICE 1
+WINGMAN 1
+VOICE OVER DEATH STAR INTERCOM  1
+TROOPER VOICE   1
+TECHNICIAN      1
+SECOND OFFICER  1
+RED TEN'S VOICE 1
+RED SEVEN       1
+RED NINE'S VOICE        1
+RED NINE        1
+RED LEADER'S VOICE      1
+RED ELEVEN      1
+REBEL OFFICER   1
+PORKINS 1
+OFFICER CASS    1
+MAN'S VOICE     1
+LUKE'S VOICE    1
+HAN'S VOICE     1
+FIRST OFFICER   1
+DEAK    1
+CREATURE        1
+CONTROL OFFICER 1
+CHIEF PILOT     1
+CAPTAIN 1
+BERU    1
+BASE VOICE      1
+ASTRO-OFFICER   1
+Time taken: 79.689 seconds, Fetched: 67 row(s)
+
+hive> INSERT OVERWRITE DIRECTORY '/user/root/'
+    >     ROW format delimited fields terminated by '\n'
+    > select name, count(name) as no_of_lines from episodeIV group by name order by no_of_lines desc;
+Query ID = root_20210915034609_122882e6-7f10-4729-b5f3-efc8edad554e
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0011, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0011/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0011
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2021-09-15 03:46:21,321 Stage-1 map = 0%,  reduce = 0%
+2021-09-15 03:46:29,868 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 5.27 sec
+2021-09-15 03:46:42,037 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 13.43 sec
+MapReduce Total cumulative CPU time: 13 seconds 430 msec
+Ended Job = job_1631675301177_0011
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1631675301177_0012, Tracking URL = http://4ce75601994e:8088/proxy/application_1631675301177_0012/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1631675301177_0012
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2021-09-15 03:47:02,557 Stage-2 map = 0%,  reduce = 0%
+2021-09-15 03:47:11,099 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 4.51 sec
+2021-09-15 03:47:20,782 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 10.97 sec
+MapReduce Total cumulative CPU time: 10 seconds 970 msec
+Ended Job = job_1631675301177_0012
+Moving data to directory /user/root
+MapReduce Jobs Launched:
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 13.43 sec   HDFS Read: 79777 HDFS Write: 2015 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 10.97 sec   HDFS Read: 9069 HDFS Write: 862 SUCCESS
+Total MapReduce CPU Time Spent: 24 seconds 400 msec
+OK
+Time taken: 73.439 seconds
+hive>  dfs -ls 'hdfs:///user/root/;
+Syntax error on hadoop options: dfs -ls 'hdfs:///user/root/;
+Exception raised from DFSShell.run Syntax error on hadoop options: dfs -ls 'hdfs:///user/root/;
+Query returned non-zero code: 1, cause: null
+hive>  dfs -ls /user/root/;
+Found 1 items
+-rw-r--r--   1 root supergroup        862 2021-09-15 03:47 /user/root/000000_0
+hive> dfs -copyToLocal 'hdfs:///user/root/000000_0' './output.txt';
+hive> exit;
+root@4ce75601994e:/# ls
+bin   derby.log  episodeIV_dialouges.txt  episodeV_dialouges.txt  home  lib64  metastore_db  opt         proc  run   srv  tmp  var
+boot  dev        episodeVI_dialouges.txt  etc                     lib   media  mnt           output.txt  root  sbin  sys  usr
+root@4ce75601994e:/# cat output.txt
+cat: output.txt: Is a directory
+root@4ce75601994e:/# cat output.txt
+cat: output.txt: Is a directory
+root@4ce75601994e:/# cd output.txt
+root@4ce75601994e:/output.txt# ls
+000000_0  episodeIV_dialouges.txt  input
+root@4ce75601994e:/output.txt# cat 000000_0
+LUKE
+253
+HAN
+152
+THREEPIO
+119
+BEN
+76
+LEIA
+57
+VADER
+41
+RED LEADER
+36
+BIGGS
+34
+TARKIN
+28
+OWEN
+25
+TROOPER
+19
+GOLD LEADER
+14
+WEDGE
+14
+OFFICER
+11
+RED TEN
+7
+GOLD FIVE
+7
+DODONNA
+6
+DEATH STAR INTERCOM VOICE
+6
+INTERCOM VOICE
+6
+GREEDO
+6
+FIRST TROOPER
+6
+AUNT BERU
+6
+BEN'S VOICE
+6
+JABBA
+6
+HUMAN
+4
+TAGGE
+4
+MOTTI
+4
+VOICE
+3
+SECOND TROOPER
+3
+MASSASSI INTERCOM VOICE
+3
+COMMANDER
+3
+BARTENDER
+3
+CAMIE
+2
+CHIEF
+2
+WILLARD
+2
+FIXER
+2
+GANTRY OFFICER
+2
+GOLD TWO
+2
+IMPERIAL OFFICER
+2
+WOMAN
+1
+WINGMAN'S VOICE
+1
+WINGMAN
+1
+VOICE OVER DEATH STAR INTERCOM
+1
+TROOPER VOICE
+1
+TECHNICIAN
+1
+SECOND OFFICER
+1
+RED TEN'S VOICE
+1
+RED SEVEN
+1
+RED NINE'S VOICE
+1
+RED NINE
+1
+RED LEADER'S VOICE
+1
+RED ELEVEN
+1
+REBEL OFFICER
+1
+PORKINS
+1
+OFFICER CASS
+1
+MAN'S VOICE
+1
+LUKE'S VOICE
+1
+HAN'S VOICE
+1
+FIRST OFFICER
+1
+DEAK
+1
+CREATURE
+1
+CONTROL OFFICER
+1
+CHIEF PILOT
+1
+CAPTAIN
+1
+BERU
+1
+BASE VOICE
+1
+ASTRO-OFFICER
+1
+root@4ce75601994e:/output.txt#
